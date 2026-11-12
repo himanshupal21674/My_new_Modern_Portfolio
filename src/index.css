@@ -1,0 +1,819 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #09090b;
+  --color-ink-soft: #111113;
+  --color-ink-elevated: #18181b;
+  --color-mist: #f4f5f7;
+  --color-paper: #ffffff;
+  --color-accent: #6d74f6;
+  --color-accent-soft: #8b90f8;
+  --color-cyan: #22d3ee;
+  --color-fuchsia: #e879f9;
+
+  --text-hero: clamp(2.25rem, 1.35rem + 4.4vw, 4.25rem);
+  --text-hero--line-height: 1.06;
+  --text-hero--letter-spacing: -0.042em;
+  --text-hero--font-weight: 600;
+
+  --text-section: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
+  --text-section--line-height: 1.18;
+  --text-section--letter-spacing: -0.028em;
+  --text-section--font-weight: 600;
+
+  --text-title: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.02em;
+  --text-title--font-weight: 600;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 360ms;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.75rem;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: clip;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.011em;
+  background: var(--color-mist);
+  color: #334155;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11" 1, "ss01" 1;
+}
+
+.dark body {
+  background: var(--color-ink);
+  color: #a1a1aa;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 32%, transparent);
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-accent) 80%, white);
+    outline-offset: 3px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-sans);
+    letter-spacing: -0.03em;
+    font-feature-settings: "cv11" 1, "ss01" 1;
+  }
+
+  .brand-name {
+    font-family: var(--font-sans);
+    font-size: var(--text-hero);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.042em;
+    font-feature-settings: "cv11" 1, "ss01" 1;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(135deg, #a5b4fc 0%, #6d74f6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.09) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 40%, transparent 80%);
+  }
+
+  .dark .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  }
+
+  .glass {
+    background: rgb(255 255 255 / 0.78);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgb(15 23 42 / 0.07);
+  }
+
+  .dark .glass {
+    background: rgb(17 17 19 / 0.78);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .surface {
+    background: rgb(255 255 255 / 0.92);
+    border: 1px solid rgb(15 23 42 / 0.07);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  }
+
+  .dark .surface {
+    background: rgb(17 17 19 / 0.9);
+    border: 1px solid rgb(255 255 255 / 0.07);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.28rem 0.7rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: #475569;
+    background: rgb(15 23 42 / 0.05);
+  }
+
+  .dark .chip {
+    color: #d4d4d8;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .page-wrap {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 72rem;
+    padding-inline: 1rem;
+  }
+
+  .section-y {
+    padding-block: clamp(4.25rem, 3.2rem + 4vw, 7.5rem);
+  }
+
+  .noise::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(160deg, rgb(109 116 246 / 0.45), rgb(255 255 255 / 0.08) 42%, transparent 70%);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .hero-mesh {
+    background:
+      radial-gradient(ellipse 70% 55% at 18% -10%, rgb(109 116 246 / 0.22), transparent 58%),
+      radial-gradient(ellipse 50% 40% at 92% 18%, rgb(34 211 238 / 0.1), transparent 55%),
+      radial-gradient(ellipse 45% 35% at 72% 92%, rgb(109 116 246 / 0.08), transparent 60%);
+  }
+
+  .dark .hero-mesh {
+    background:
+      radial-gradient(ellipse 70% 55% at 18% -10%, rgb(109 116 246 / 0.2), transparent 58%),
+      radial-gradient(ellipse 50% 40% at 92% 18%, rgb(34 211 238 / 0.08), transparent 55%),
+      radial-gradient(ellipse 45% 35% at 72% 92%, rgb(109 116 246 / 0.07), transparent 60%);
+  }
+
+  @media (min-width: 640px) {
+    .page-wrap {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-wrap {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Desktop-only hover lift — never on touch */
+  @media (hover: hover) and (pointer: fine) {
+    .lift-card {
+      transition:
+        transform var(--duration-base) var(--ease-out),
+        box-shadow var(--duration-base) var(--ease-out),
+        border-color var(--duration-base) var(--ease-out);
+    }
+
+    .lift-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px -16px rgb(15 23 42 / 0.18);
+    }
+
+    .dark .lift-card:hover {
+      box-shadow: 0 16px 40px -18px rgb(0 0 0 / 0.55);
+      border-color: rgb(255 255 255 / 0.12);
+    }
+
+    .img-zoom img {
+      transition: transform 420ms var(--ease-out);
+    }
+
+    .img-zoom:hover img {
+      transform: scale(1.04);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .glass {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: rgb(255 255 255 / 0.96);
+    }
+
+    .dark .glass {
+      background: rgb(17 17 19 / 0.96);
+    }
+
+    .noise::before {
+      display: none;
+    }
+
+    .hero-mesh {
+      background: radial-gradient(ellipse 80% 50% at 50% -20%, rgb(109 116 246 / 0.16), transparent 62%);
+    }
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 14s ease infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+
+@keyframes mesh-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(2%, 3%, 0) scale(1.06);
+    opacity: 1;
+  }
+}
+
+.animate-mesh {
+  animation: mesh-drift 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-gradient,
+  .animate-float,
+  .animate-mesh,
+  .animate-ping {
+    animation: none;
+  }
+
+  .glass {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .lift-card,
+  .img-zoom img {
+    transition: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .brand-name {
+    font-size: 2rem;
+    letter-spacing: -0.038em;
+  }
+}
+
+@media (max-width: 767px) {
+  .animate-mesh,
+  .animate-float,
+  .animate-gradient,
+  .animate-ping {
+    animation: none;
+  }
+}
+
+/* ───────────────────────── Theme switch: circular reveal ───────────────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ───────────────────────── Skills ─────────────────────────
+   Every hover state is driven by one custom property, --a (0 → 1).
+   Children derive transform / opacity / ring / counter from it, so a single
+   state change triggers GPU-friendly transitions and no JavaScript runs. */
+
+@property --skill-num {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+/* Spotlight card: border light + inner wash follow the cursor (--x / --y) */
+.spot-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.spot-card::before,
+.spot-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 450ms var(--ease-out);
+}
+
+.spot-card::before {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(
+    280px circle at var(--x, 50%) var(--y, 50%),
+    color-mix(in oklab, var(--color-accent) 90%, white),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.spot-card::after {
+  z-index: -1;
+  background: radial-gradient(
+    460px circle at var(--x, 50%) var(--y, 50%),
+    color-mix(in oklab, var(--color-accent) 10%, transparent),
+    transparent 65%
+  );
+}
+
+/* Skill row */
+.skill-tile {
+  --a: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.3rem;
+  border-radius: 0.9rem;
+  outline-offset: 1px;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 280ms var(--ease-out);
+}
+
+.skill-tile:hover,
+.skill-tile:focus-visible {
+  --a: 1;
+}
+
+/* Brand-tinted background pill */
+.skill-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: color-mix(in oklab, var(--brand) 10%, transparent);
+  opacity: var(--a);
+  transform: scale(calc(0.94 + var(--a) * 0.06));
+  transition:
+    opacity 260ms var(--ease-out),
+    transform 380ms var(--ease-out);
+}
+
+.skill-icon,
+.skill-name,
+.skill-level {
+  position: relative;
+  z-index: 1;
+}
+
+.skill-icon {
+  display: grid;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+}
+
+/* Soft brand glow — blur is static; only opacity/transform animate */
+.skill-icon::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 999px;
+  background: var(--brand);
+  filter: blur(12px);
+  opacity: calc(var(--a) * 0.45);
+  transform: scale(calc(0.5 + var(--a) * 0.5));
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.skill-glyph {
+  position: relative;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 0.6rem;
+  background: rgb(15 23 42 / 0.045);
+  transform: translateY(calc(var(--a) * -2px)) rotate(calc(var(--a) * -10deg))
+    scale(calc(1 + var(--a) * 0.08));
+  transition:
+    transform 480ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 260ms var(--ease-out);
+}
+
+.dark .skill-glyph {
+  background: rgb(255 255 255 / 0.06);
+}
+
+.skill-tile:hover .skill-glyph,
+.skill-tile:focus-visible .skill-glyph {
+  background: rgb(255 255 255 / 0.9);
+}
+
+.dark .skill-tile:hover .skill-glyph,
+.dark .skill-tile:focus-visible .skill-glyph {
+  background: rgb(24 24 27 / 0.9);
+}
+
+/* Level ring around the icon */
+.skill-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+.skill-ring circle {
+  fill: none;
+  stroke-width: 2;
+}
+
+.skill-ring-track {
+  stroke: rgb(148 163 184 / 0.22);
+  opacity: var(--a);
+  transition: opacity 260ms var(--ease-out);
+}
+
+.skill-ring-fill {
+  stroke: var(--brand);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--a) * var(--level, 0));
+  transition: stroke-dashoffset 750ms var(--ease-out);
+}
+
+.skill-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #334155;
+  transform: translateX(calc(var(--a) * 2px));
+  transition:
+    transform 320ms var(--ease-out),
+    color 260ms var(--ease-out);
+}
+
+.dark .skill-name {
+  color: #d4d4d8;
+}
+
+.skill-tile:hover .skill-name,
+.skill-tile:focus-visible .skill-name {
+  color: #0f172a;
+}
+
+.dark .skill-tile:hover .skill-name,
+.dark .skill-tile:focus-visible .skill-name {
+  color: #fff;
+}
+
+/* Percentage counts up with a pure-CSS integer transition */
+.skill-level {
+  --skill-num: calc(var(--a) * var(--level, 0));
+  counter-reset: skill var(--skill-num);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--brand) 60%, #0f172a);
+  opacity: var(--a);
+  transform: translateX(calc((1 - var(--a)) * -6px));
+  transition:
+    opacity 260ms var(--ease-out),
+    transform 360ms var(--ease-out),
+    --skill-num 750ms var(--ease-out);
+}
+
+.dark .skill-level {
+  color: color-mix(in oklab, var(--brand) 80%, white);
+}
+
+.skill-level::after {
+  content: counter(skill) "%";
+}
+
+/* Touch: a tap focuses the tile and shows its state */
+@media (hover: none) {
+  .skill-tile:focus {
+    --a: 1;
+  }
+}
+
+/* Mouse only: spotlight + dim the other skills */
+@media (hover: hover) and (pointer: fine) {
+  .spot-grid:hover .spot-card::before {
+    opacity: 1;
+  }
+
+  .spot-card:hover::after {
+    opacity: 1;
+  }
+
+  .spot-grid:has(.skill-tile:hover) .skill-tile:not(:hover) {
+    opacity: 0.45;
+  }
+}
+
+/* Marquee strip */
+.skills-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.skills-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: skills-marquee 55s linear infinite;
+}
+
+.skills-marquee:hover .skills-marquee-track,
+.skills-marquee[data-paused="true"] .skills-marquee-track {
+  animation-play-state: paused;
+}
+
+.skills-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 0.45rem 0.85rem 0.45rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgb(15 23 42 / 0.07);
+  background: rgb(255 255 255 / 0.7);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #475569;
+  transition:
+    border-color 260ms var(--ease-out),
+    color 260ms var(--ease-out);
+}
+
+.dark .skills-marquee-item {
+  border-color: rgb(255 255 255 / 0.07);
+  background: rgb(255 255 255 / 0.03);
+  color: #a1a1aa;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skills-marquee-item:hover {
+    border-color: color-mix(in oklab, var(--brand) 55%, transparent);
+    color: color-mix(in oklab, var(--brand) 55%, #0f172a);
+  }
+
+  .dark .skills-marquee-item:hover {
+    color: color-mix(in oklab, var(--brand) 75%, white);
+  }
+}
+
+@keyframes skills-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-marquee {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .skills-marquee-track {
+    animation: none;
+  }
+
+  .skill-tile,
+  .skill-tile *,
+  .skill-tile::before,
+  .skill-icon::before {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ───────────────────────── Hero: cursor effects (desktop, fine pointer only) ─────────────────────────
+   --mx / --my live on .hero-fx only, so each pointer frame restyles 3 small
+   elements instead of the whole hero. The spotlight moves by transform. */
+.hero-fx {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+}
+
+#home:hover .hero-fx {
+  opacity: 1;
+}
+
+.hero-spot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44rem;
+  height: 44rem;
+  margin: -22rem 0 0 -22rem;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgb(109 116 246 / 0.16), transparent);
+  transform: translate3d(var(--mx, 50vw), var(--my, 40vh), 0);
+  will-change: transform;
+}
+
+.dark .hero-spot {
+  background: radial-gradient(closest-side, rgb(109 116 246 / 0.2), transparent);
+}
+
+.hero-grid-glow {
+  background-image:
+    linear-gradient(to right, rgb(109 116 246 / 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(109 116 246 / 0.28) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 75%);
+  mask-image: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 75%);
+}
+
+.hero-glare {
+  background: radial-gradient(circle at center, rgb(255 255 255 / 0.22), transparent 42%);
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out);
+}
+
+#home:hover .hero-glare {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx,
+  .hero-glare {
+    display: none;
+  }
+}
+
+/* Keep page width stable when the project modal locks scrolling */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* ───────────────────────── Projects: tilt + spotlight (mouse only) ───────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card {
+    border-radius: 16px;
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+      translateY(var(--lift, 0px));
+    transition:
+      transform 350ms var(--ease-out),
+      box-shadow 350ms var(--ease-out);
+  }
+
+  .tilt-card:hover {
+    --lift: -4px;
+    box-shadow: 0 22px 44px -24px rgb(15 23 42 / 0.28);
+  }
+
+  .dark .tilt-card:hover {
+    box-shadow: 0 24px 50px -24px rgb(0 0 0 / 0.7);
+  }
+
+  .spot-solo:hover::before,
+  .spot-solo:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card {
+    transform: none !important;
+  }
+}
